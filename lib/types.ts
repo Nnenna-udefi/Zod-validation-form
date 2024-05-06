@@ -15,4 +15,6 @@ export type FormFieldProps = {
   register: UseFormRegister<FormData>;
   error: FieldError | undefined;
   valueAsNumber?: boolean;
+  label: string;
+  id: string;
 };

@@ -17,13 +17,17 @@ export const Form = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <h1 className="text-3xl font-bold ">Form validated with zod</h1>
+        <h1 className="text-3xl font-bold ">
+          Form validated with react-hook-form
+        </h1>
         <Input
           type="email"
           placeholder="Email"
           name="email"
           register={register}
           error={errors.email}
+          id="email"
+          label="Email Address:"
         />
 
         <Input
@@ -32,6 +36,8 @@ export const Form = () => {
           name="github_url"
           register={register}
           error={errors.github_url}
+          id="github_url"
+          label="Github URL:"
         />
 
         <Input
@@ -41,6 +47,8 @@ export const Form = () => {
           register={register}
           error={errors.years_of_experience}
           valueAsNumber
+          id="years_of_experience"
+          label="Years of Experience:"
         />
 
         <Input
@@ -49,6 +57,8 @@ export const Form = () => {
           name="password"
           register={register}
           error={errors.password}
+          id="password"
+          label="Enter Password:"
         />
 
         <Input
@@ -57,6 +67,8 @@ export const Form = () => {
           name="confirm_password"
           register={register}
           error={errors.confirm_password}
+          id="confirm_password"
+          label="Confirm Password:"
         />
 
         <button
