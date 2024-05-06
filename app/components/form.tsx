@@ -16,9 +16,9 @@ export const Form = () => {
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <h1 className="text-3xl font-bold ">
-          Form validated with react-hook-form
+      <div className="mt-8">
+        <h1 className="text-xl font-bold ">
+          Form validation using react-hook-form
         </h1>
         <Input
           type="email"

@@ -1,12 +1,12 @@
 "use client";
 import { Form } from "./components/form";
-import { MyForm } from "./components/zodform";
+import { ZodForm } from "./components/zodform";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-row gap-10 items-center justify-between p-24">
+      <ZodForm />
       <Form />
-      <MyForm />
     </main>
   );
 }

@@ -1,33 +1,32 @@
+import { schema } from "@/lib/schema";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-// Define Zod schema for form data
-const schema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-  //      password: z.string().refine((value) => {
-  //          const passwordRegex =
-  //            /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  //        return passwordRegex.test(value);
-  //    }, "Password must contain an uppercase letter, a number, a special character and a minimum of 8 numbers"),
-});
+type FormData = z.infer<typeof schema>;
 
-type FormDa = z.infer<typeof schema>;
+type FieldName = "username" | "email" | "password";
 
-export const MyForm = () => {
+const formFields: { name: FieldName; placeholder: string; type: string }[] = [
+  { name: "username", placeholder: "Enter Username", type: "text" },
+  { name: "email", placeholder: "Enter Email Address", type: "email" },
+  { name: "password", placeholder: "Enter password", type: "password" },
+];
+
+export const ZodForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormDa>();
+  } = useForm<FormData>();
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
 
-  const onSubmit = (data: FormDa) => {
+  const onSubmit = (data: FormData) => {
     try {
       const validatedData = schema.parse(data);
       console.log("Form data:", validatedData);
+      alert("Form Submission successful");
       setEmailError(null);
       setPasswordError(null);
     } catch (error) {
@@ -48,23 +47,31 @@ export const MyForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <h1 className="text-2xl font-bold mt-10">
+        <h1 className="text-xl font-bold">
           Form validation using Zod and react-hook-form
         </h1>
-        <input
-          {...register("email")}
-          placeholder="Email Address"
-          className="border p-2 my-2 rounded-md w-full"
-        />
+
+        {formFields.map((field) => (
+          <div key={field.name}>
+            <input
+              {...register(field.name)}
+              className="border p-2 my-2 rounded-md w-full"
+              type={field.type}
+              placeholder={field.placeholder}
+            />
+            {errors[field.name]?.message && (
+              <span className="text-red-500 text-xs my-2">
+                {errors[field.name]?.message}
+              </span>
+            )}
+          </div>
+        ))}
+
         {emailError && (
           <span className="text-red-500 text-xs my-2">{emailError}</span>
         )}
+        <br />
 
-        <input
-          {...register("password")}
-          placeholder="Password"
-          className="border p-2 my-2 rounded-md w-full"
-        />
         {passwordError && (
           <span className="text-red-500 my-2 text-xs">{passwordError}</span>
         )}
